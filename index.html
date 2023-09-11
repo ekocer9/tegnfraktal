@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tegn Fraktal</title>
+</head>
+<body>
+<canvas width="600" height="300"></canvas>
+<script>
+    let cx = document.querySelector("canvas").getContext("2d");
+    let blue = 20
+    let green = 100
+    let red = 200
+
+    function changeColor() {
+        red = Math.floor(Math.random() * 250)
+        green = Math.floor(Math.random() * 250)
+        blue = Math.floor(Math.random() * 250)
+    }
+
+    function branch(lenght, angle, scale) {
+
+        changeColor()
+        cx.fillStyle = `rgb(${red},${green},${blue})`
+        cx.fillRect(0, 0, 1, lenght);
+        if (lenght < 8) return
+        cx.save()
+        cx.translate(0, lenght)
+        cx.rotate(-angle)
+        branch(lenght*scale, angle, scale)
+        cx.rotate(2*angle)
+        branch(lenght*scale, angle, scale)
+        cx.restore()
+    }
+
+    setInterval(() => branch(60, 0.5, 0.8), 1000)
+    cx.translate(300, 0)
+    branch(60, 0.5, 0.8)
+
+</script>
+</body>
+</html>
